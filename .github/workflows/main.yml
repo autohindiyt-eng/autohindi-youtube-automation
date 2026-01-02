@@ -1,7 +1,7 @@
 name: YouTube Automation
 
 on:
-  workflow_dispatch:  # permette di eseguire manualmente
+  workflow_dispatch:  # permette run manuale
 
 jobs:
   build:
@@ -11,24 +11,32 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Install ffmpeg
     - name: Install system dependencies
-      run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
 
+    # Set up Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
+    # Upgrade pip
     - name: Upgrade pip
       run: python -m pip install --upgrade pip
 
+    # Installa librerie Python necessarie
     - name: Install Python dependencies
       run: |
-        pip install moviepy
         pip install gTTS
+        pip install moviepy==1.0.3
+        pip install imageio-ffmpeg
         pip install google-api-python-client
         pip install google-auth-httplib2
         pip install google-auth-oauthlib
 
+    # Esegui lo script
     - name: Run automation script
       run: python scripts/short_generator.py
