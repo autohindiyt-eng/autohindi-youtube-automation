@@ -1,21 +1,20 @@
 from gtts import gTTS
-from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
-import os
+from moviepy.editor import ImageClip, AudioFileClip
 
-# Testo in Hindi per il Short
-text_hindi = "नमस्ते! यह आपका पहला ऑटो शॉर्ट है।"  # "Ciao! Questo è il tuo primo Short automatico."
+# Testo in Hindi
+text_hindi = "नमस्ते! यह आपका पहला ऑटो शॉर्ट है।"
 
-# Crea l'audio con gTTS
+# Genera audio
 audio_path = "assets/audio/audio.mp3"
 tts = gTTS(text=text_hindi, lang='hi')
 tts.save(audio_path)
 
-# Crea un video da immagine e aggiungi audio
+# Genera video da immagine
 image_path = "assets/images/sample.jpg"
-clip = ImageClip(image_path, duration=5)  # durata 5 secondi
+clip = ImageClip(image_path, duration=5)
 clip = clip.set_audio(AudioFileClip(audio_path))
 
-# Salva il video finale
+# Salva video
 output_path = "outputs/short_test.mp4"
 clip.write_videofile(output_path, fps=24)
 
